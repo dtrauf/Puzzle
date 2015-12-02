@@ -6,6 +6,7 @@
  */
 package controller;
 
+import gui.PreviewImage;
 import processing.core.PVector;
 import vialab.SMT.Zone;
 
@@ -50,6 +51,13 @@ public class GameController {
 			AppInjector.zoneManager().remove(zoneToRemoveFromPlay);
 		}
 		
+	}
+	
+	public void addPreviewImage() {
+
+		PreviewImage pImage = new PreviewImage();
+		pImage.rotate(50);
+		AppInjector.zoneManager().add(pImage);
 	}
 	
 }

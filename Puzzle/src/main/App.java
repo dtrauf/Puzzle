@@ -11,6 +11,7 @@ public class App extends PApplet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+//	private PImage testImage;
 
 	public static void main(String args[]) {
 		
@@ -30,6 +31,10 @@ public class App extends PApplet {
 		
 		size(displayWidth, displayHeight, SMT.RENDERER);
 		SMT.init( this, TouchSource.AUTOMATIC);
+		
+//		Show a test image
+		AppInjector.controller().addPreviewImage();
+		
 	}
 	
 	public void draw() {
