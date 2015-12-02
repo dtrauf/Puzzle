@@ -29,7 +29,7 @@ public class PreviewImage extends Zone{
 	public PreviewImage (){
 		
 		testImage = Utility.getImage("data/5520293_1600x1200.jpg");
-		
+//		Size of zone to interact
 		setSize(1024, 768);
 	}
 	
@@ -42,7 +42,8 @@ public class PreviewImage extends Zone{
 	}
 	
 	public void touch() {
-		drag();
+//		Image should only be dragged or rotated ...
+//		TODO ... within WindowSize
 		rnt();
 	}
 	
