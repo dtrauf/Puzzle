@@ -22,6 +22,7 @@ public class PreviewImage extends Zone{
 	
 	private PImage testImage;
 	
+	
 	/**
 	 * Create Preview Image
 	 *
@@ -43,9 +44,9 @@ public class PreviewImage extends Zone{
 	
 	public void touch() {
 //		Image should only be dragged or rotated ...
-//		TODO ... within WindowSize
+//		TODO ... within WindowSize, "corners"
 		rnt();
 	}
-	
+
 	
 }
