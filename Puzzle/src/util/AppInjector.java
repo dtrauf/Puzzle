@@ -120,4 +120,5 @@ public class AppInjector {
 		return applet;
 	}
 	
+//	TODO method to make the size of pieces available for other classes -> measures were calculated in the Utility class 
 }

@@ -58,4 +58,7 @@ public class Utility {
 			iter.remove();
 		}
 	}
+	
+//	TODO method for calculating the measures of pieces
+//	TODO method for to get the size of an image
 }
