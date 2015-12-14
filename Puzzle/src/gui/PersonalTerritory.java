@@ -4,6 +4,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Point;
 
 /**
  * @author <a href="trauf@hrz.tu-chemnitz.de">Daniel Trauf</a>
@@ -45,6 +46,11 @@ public class PersonalTerritory extends Territory {
 	 */
 	public void setMode(int mode) {
 		this.mode = mode;
+	}
+	
+	public Point getPosition() {
+		Point p = new Point(xPos,yPos);
+		return p;
 	}
 	
 	public void setPosition(int xPos, int yPos) {

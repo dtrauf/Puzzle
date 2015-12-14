@@ -133,7 +133,6 @@ public class Piece extends Zone {
 	 * @return one juncture
 	 */
 	public Point getJuncture(int a, int b) {
-//		TODO should return a point
 		Point p = new Point((junctures[a][b]),(junctures[a+2][b+2]));
 		return p;
 	}

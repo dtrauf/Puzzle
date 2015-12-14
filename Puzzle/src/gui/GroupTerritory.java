@@ -18,7 +18,7 @@ public class GroupTerritory extends Territory {
 	private int xPos;
 	private int yPos;
 	private Color c;
-	private double[][]apexes;
+	private int[][]apexes;
 	
 	/**
 	 * @param height

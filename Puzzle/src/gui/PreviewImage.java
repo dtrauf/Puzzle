@@ -29,9 +29,11 @@ public class PreviewImage extends Zone{
 	 * Create Preview Image
 	 *
 	 */
-	public PreviewImage (){
+	public PreviewImage (double width, double height){
 		
-		testImage = Utility.getImage("data/5520293_1600x1200.jpg");
+		this.testImage = Utility.getImage("data/5520293_1600x1200.jpg");
+		this.width = width;
+		this.height = height;
 //		Size of zone to interact
 		setSize(1024, 768);
 	}
