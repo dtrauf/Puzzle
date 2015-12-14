@@ -21,6 +21,8 @@ import vialab.SMT.Zone;
 public class PreviewImage extends Zone{
 	
 	private PImage testImage;
+	private double width;
+	private double height;
 	
 	
 	/**
@@ -46,6 +48,10 @@ public class PreviewImage extends Zone{
 //		Image should only be dragged or rotated ...
 //		TODO ... within WindowSize, "corners"
 		rnt();
+	}
+	
+	public void widget() {
+//		TODO turn image into widget
 	}
 
 	
