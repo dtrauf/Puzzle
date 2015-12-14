@@ -35,22 +35,19 @@ public class Piece extends Zone {
 	 * @param x
 	 * @param y
 	 * @param imageSection
-	 * @param angle
-	 * @param zoom
-	 * @param priority
 	 * @param shape
 	 * @param addable
 	 * @param junctures
 	 */
-	public Piece(int x, int y, int imageSection, double angle, double zoom, int priority, int shape, boolean addable,
+	public Piece(int x, int y, int imageSection, int shape, boolean addable,
 			int[][] junctures) {
 
 		this.x = x;
 		this.y = y;
 		this.imageSection = imageSection;
-		this.angle = angle;
-		this.zoom = zoom;
-		this.priority = priority;
+		this.angle = 0;
+		this.zoom = 1;
+		this.priority = 1;
 		this.shape = shape;
 		this.addable = addable;
 		this.junctures = junctures;
@@ -66,6 +63,13 @@ public class Piece extends Zone {
 	public void setPosition(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+	}
+	
+	/**
+	 * @param zoom the zoom to set
+	 */
+	public void setZoom(int zoom) {
+		this.zoom = zoom;
 	}
 	
 
@@ -104,6 +108,13 @@ public class Piece extends Zone {
 		return angle;
 	}
 
+	/**
+	 * @param angle the angle to set
+	 */
+	public void setAngle(int angle) {
+		this.angle = angle;
+	}
+	
 	/**
 	 * @return the addable
 	 */
