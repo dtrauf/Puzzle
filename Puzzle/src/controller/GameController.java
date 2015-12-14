@@ -54,8 +54,8 @@ public class GameController {
 	}
 	
 	public void addPreviewImage() {
-
-		PreviewImage pImage = new PreviewImage();
+//		TODO get size of Image from method in Utility class
+		PreviewImage pImage = new PreviewImage(0, 0);
 		pImage.rotate(50);
 		AppInjector.zoneManager().add(pImage);
 	}
