@@ -3,6 +3,8 @@
  */
 package gui;
 
+import java.util.ArrayList;
+
 import vialab.SMT.Zone;
 
 /**
@@ -13,6 +15,14 @@ import vialab.SMT.Zone;
  *
  */
 public class Territory extends Zone {
+	protected static ArrayList<Piece> pieces;
 
+	/**
+	 * @param pieces
+	 */
+	public Territory(ArrayList<Piece> pieces) {
+		this.pieces = pieces;
+	}
+	
 	
 }

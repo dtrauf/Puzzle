@@ -24,6 +24,7 @@ public class TempStorage extends Territory{
 	 * @param vertices
 	 */
 	public TempStorage(int xPos, int yPos, Color c, int[][] vertices) {
+		super(pieces);
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.c = c;

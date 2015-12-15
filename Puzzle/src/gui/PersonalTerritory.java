@@ -14,6 +14,7 @@ import java.awt.Point;
  *
  */
 public class PersonalTerritory extends Territory {
+	
 	private double width;
 	private double height;
 	private Color c;
@@ -33,12 +34,14 @@ public class PersonalTerritory extends Territory {
 	 * @param mode
 	 */
 	public PersonalTerritory(double width, double height, Color c, int xPos, int yPos, int mode) {
+		super(pieces);
 		this.width = width;
 		this.height = height;
 		this.c = c;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.mode = mode;
+
 	}
 
 	/**

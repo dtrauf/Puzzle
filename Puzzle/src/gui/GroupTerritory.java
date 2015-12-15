@@ -28,6 +28,7 @@ public class GroupTerritory extends Territory {
 	 * @param c
 	 */
 	public GroupTerritory(double height, double width, int xPos, int yPos, Color c) {
+		super(pieces);
 		this.height = height;
 		this.width = width;
 		this.xPos = xPos;
