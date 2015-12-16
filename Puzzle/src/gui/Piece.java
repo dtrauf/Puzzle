@@ -4,6 +4,8 @@
 package gui;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import vialab.SMT.Zone;
 
@@ -19,6 +21,8 @@ import vialab.SMT.Zone;
  */
 public class Piece extends Zone {
 
+	private ArrayList<Vector> junctures;		//coordinates of points for connecting pieces
+	
 	private int x;					//column position of the piece in the matrix
 	private int y;					//row position of the piece in the matrix
 	private int xPos;
@@ -29,7 +33,7 @@ public class Piece extends Zone {
 	private int priority;			//level depends on number of comprehended pieces ... 1 for 1 piece, 2 for 2 pieces,..., 5 for 5 pieces, 6 for 6-10 pieces, 7 for 11-25 pieces, 8 for 26-100 pieces, 9 for more than 100
 	private int shape;				//type of shape, one of 7 or one of 13
 	private boolean addable;		//can be added to a container
-	private int[][] junctures;		//coordinates of points for connecting pieces
+	
 	
 	/**
 	 * @param x
@@ -40,7 +44,7 @@ public class Piece extends Zone {
 	 * @param junctures
 	 */
 	public Piece(int x, int y, int imageSection, int shape, boolean addable,
-			int[][] junctures) {
+			ArrayList<Vector> junctures) {
 
 		this.x = x;
 		this.y = y;
@@ -125,16 +129,8 @@ public class Piece extends Zone {
 	/**
 	 * @return the junctures
 	 */
-	public int[][] getJunctures() {
+	public ArrayList<Vector> getJunctures() {
 		return junctures;
-	}
-	
-	/**
-	 * @return one juncture
-	 */
-	public Point getJuncture(int a, int b) {
-		Point p = new Point((junctures[a][b]),(junctures[a+2][b+2]));
-		return p;
 	}
 
 	/**
