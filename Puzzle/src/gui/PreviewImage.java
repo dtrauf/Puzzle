@@ -21,6 +21,7 @@ import vialab.SMT.Zone;
 public class PreviewImage extends Zone{
 	
 	private PImage testImage;
+	private PImage newImage;
 	private double width;
 	private double height;
 	
@@ -31,9 +32,26 @@ public class PreviewImage extends Zone{
 	 */
 	public PreviewImage (double width, double height){
 		
-		this.testImage = Utility.getImage("data/5520293_1600x1200.jpg");
 		this.width = width;
 		this.height = height;
+		
+		this.testImage = Utility.getImage("data/5520293_1600x1200.jpg");		// puzzle image
+		this.newImage = Utility.getImage("data/pixels.jpg");					// small image for image section of piece
+//		PImage maskImage = Utility.getImage("data/mask3.jpg");					// masking image
+		
+//		load the pixels of both images
+		testImage.loadPixels(); 
+		newImage.loadPixels();
+		
+//		writes pixels of puzzle image into small image pixels
+		for (int i = 0; i < 100*100; i++) {
+			newImage.pixels[i] = testImage.pixels[i+50000];
+		}
+		newImage.updatePixels();
+		
+//		masking the image
+//		testImage.mask(maskImage);
+		
 //		Size of zone to interact
 		setSize(1024, 768);
 	}
@@ -42,7 +60,8 @@ public class PreviewImage extends Zone{
 
 		strokeWeight(5);
 		stroke(255);
-		image(testImage,0,0);
+		image(testImage,50,50);
+		image(newImage,1500,20);
 		
 	}
 	

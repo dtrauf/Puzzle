@@ -7,12 +7,9 @@
 package controller;
 
 import gui.PreviewImage;
-import processing.core.PImage;
 import processing.core.PVector;
-import vialab.SMT.Zone;
-
 import util.AppInjector;
-import util.io.Utility;
+import vialab.SMT.Zone;
 
 /**
  * The game controller creates the link between model and visualization. Mainly it is responsible for creating GUI elements dictated by the GameEngine. <BR>
@@ -59,7 +56,9 @@ public class GameController {
 //		TODO get size of Image from method in Utility class
 		PreviewImage pImage = new PreviewImage(0, 0);
 		pImage.rotate(50);
+		
 		AppInjector.zoneManager().add(pImage);
+		
 	}
 	
 }
