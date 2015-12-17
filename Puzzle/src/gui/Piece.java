@@ -65,8 +65,8 @@ public class Piece extends Zone {
 	 * @param yPos the y position to set
 	 */
 	public void setPosition(int xPos, int yPos) {
-		this.xPos = xPos;
-		this.yPos = yPos;
+		this.setX(xPos);
+		this.setY(yPos);
 	}
 	
 	/**
@@ -103,13 +103,6 @@ public class Piece extends Zone {
 	 */
 	public void setShape(int shape) {
 		this.shape = shape;
-	}
-
-	/**
-	 * @return the angle
-	 */
-	public double getAngle() {
-		return angle;
 	}
 
 	/**

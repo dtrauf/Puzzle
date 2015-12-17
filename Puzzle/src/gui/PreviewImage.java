@@ -3,7 +3,9 @@
  */
 package gui;
 
+import main.App;
 import processing.core.PImage;
+import util.AppInjector;
 import util.io.Utility;
 import vialab.SMT.Zone;
 
@@ -22,18 +24,12 @@ public class PreviewImage extends Zone{
 	
 	private PImage testImage;
 	private PImage newImage;
-	private double width;
-	private double height;
-	
 	
 	/**
 	 * Create Preview Image
 	 *
 	 */
-	public PreviewImage (double width, double height){
-		
-		this.width = width;
-		this.height = height;
+	public PreviewImage (){
 		
 		this.testImage = Utility.getImage("data/5520293_1600x1200.jpg");		// puzzle image
 		this.newImage = Utility.getImage("data/pixels.jpg");					// small image for image section of piece
@@ -60,7 +56,7 @@ public class PreviewImage extends Zone{
 
 		strokeWeight(5);
 		stroke(255);
-		image(testImage,50,50);
+		image(testImage,0,0);
 		image(newImage,1500,20);
 		
 	}

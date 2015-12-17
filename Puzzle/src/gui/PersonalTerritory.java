@@ -4,7 +4,7 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Point;
+import java.util.Vector;
 
 /**
  * @author <a href="trauf@hrz.tu-chemnitz.de">Daniel Trauf</a>
@@ -51,14 +51,14 @@ public class PersonalTerritory extends Territory {
 		this.mode = mode;
 	}
 	
-	public Point getPosition() {
-		Point p = new Point(xPos,yPos);
+	public Vector getPosition() {
+		Vector p = new Vector(xPos,yPos);
 		return p;
 	}
 	
 	public void setPosition(int xPos, int yPos) {
-		this.xPos = xPos;
-		this.yPos = yPos;
+		this.setX(xPos);
+		this.setY(yPos);
 	}
 
 }

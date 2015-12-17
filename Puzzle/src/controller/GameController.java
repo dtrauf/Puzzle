@@ -7,8 +7,10 @@
 package controller;
 
 import gui.PreviewImage;
+import processing.core.PImage;
 import processing.core.PVector;
 import util.AppInjector;
+import util.io.Utility;
 import vialab.SMT.Zone;
 
 /**
@@ -52,12 +54,24 @@ public class GameController {
 		
 	}
 	
+	/**
+	 * Add the Preview Image at the scene at the right side with an angle of 90 degree
+	 */	
 	public void addPreviewImage() {
 //		TODO get size of Image from method in Utility class
-		PreviewImage pImage = new PreviewImage(0, 0);
-		pImage.rotate(50);
+//		PreviewImage pImage = new PreviewImage();
+
+//		pImage.translate(AppInjector.application().displayWidth-768,AppInjector.application().displayHeight/4);
+//		pImage.rotateAbout(4.7123889803847f, Zone.CENTER);
 		
-		AppInjector.zoneManager().add(pImage);
+//		AppInjector.zoneManager().add(pImage);
+		
+	}
+	
+	public void createAllPieces() {
+		PImage puzzleImage = Utility.getImage("data/view_of_manarola_cinque_terre_italy-wallpaper-960x600.jpg");
+		
+		
 		
 	}
 	
