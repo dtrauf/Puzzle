@@ -35,6 +35,9 @@ public class App extends PApplet {
 //		Show a test image
 		AppInjector.controller().addPreviewImage();
 		
+//		create all pieces
+		AppInjector.controller().createAllPieces();
+		
 	}
 	
 	public void draw() {
