@@ -11,19 +11,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import controller.listener.ILevelListener;
+import model.ImageProperties;
 import model.Level;
-import processing.core.PVector;
-import util.Constants;
 import util.AppInjector;
+import util.Constants;
 
 /**
  * This is the GameEngine. The GameEngine is responsible for the "flow" of a game. It manages
@@ -42,7 +38,7 @@ public class GameEngine implements ILevelListener {
 	
 	private GameStates currentGameState;
 	
-	private ArrayList<Object> resources;
+	private ArrayList<ImageProperties> imageProperties;
 	
 	// Verwaltet alle aktiven Objekte des Spiels.
 	// Als aktive Objekte gelten (derzeit) das Level und alle im Level vorkommenden Objekte
@@ -70,7 +66,7 @@ public class GameEngine implements ILevelListener {
 	
 	public GameEngine() {
 		levelMap = new HashMap<Integer, Level>();
-		resources = loadResources();
+		imageProperties = loadImageProperties();
 		currentLevel = 1;
 		
 		// Since we created the Level objects in the loadResources() method we can now add the Engine as a listener to each one.
@@ -94,25 +90,76 @@ public class GameEngine implements ILevelListener {
 	 * 
 	 * @return The loaded resources in an ArrayList<>
 	 */
-	private ArrayList<Object> loadResources() {
+//	private ArrayList<Object> loadResources() {
+//		
+//		  Path path = Paths.get(Constants.RESOURCE_URI); // loads the images for a card
+//		  
+//		  ArrayList<Object> cards = new ArrayList<Object>();
+//		  try {
+//	            Stream<String> lines = Files.lines(path);
+//	            lines.forEach(s -> {
+//	            	if (!s.startsWith("#")) { //ignore comment
+//	            		String[] parts = s.split(",");
+////	        			cards.add(new CardContent(parts[0],parts[1],parts[2]));
+//	            		resources.add(new Object());
+//	            	}
+//	            	});
+//	            lines.close();
+//	        } catch (IOException ex) {
+//
+//	        }
+//		return cards;
+//	}
+	
+	/**
+	 * Loads all Resources from a file with the properties of the puzzle image into the game engine. 
+	 * 
+	 * @return The loaded resources in the ArrayList<ImageProperties>
+	 */
+	private ArrayList<ImageProperties> loadImageProperties() {
 		
-		  Path path = Paths.get(Constants.RESOURCE_URI); // loads the images for a card
+		  Path path = Paths.get(Constants.PUZZLE_IMAGES_INFO); // loads the images for the puzzle
 		  
-		  ArrayList<Object> cards = new ArrayList<Object>();
+		  ArrayList<ImageProperties> images = new ArrayList<ImageProperties>();
 		  try {
 	            Stream<String> lines = Files.lines(path);
 	            lines.forEach(s -> {
 	            	if (!s.startsWith("#")) { //ignore comment
 	            		String[] parts = s.split(",");
-//	        			cards.add(new CardContent(parts[0],parts[1],parts[2]));
-	            		resources.add(new Object());
+	            		images.add(new ImageProperties(Integer.parseInt(parts[0],10),Integer.parseInt(parts[1],10),Integer.parseInt(parts[2],10),Integer.parseInt(parts[3],10),parts[4]));
 	            	}
-	            	});
+	            });
 	            lines.close();
 	        } catch (IOException ex) {
 
 	        }
-		return cards;
+		return images;
+	}
+	
+	public ArrayList<ImageProperties> getImageProperties() {
+		return imageProperties;
+	}
+	
+//	TODO method to get the "right" numbers from ImageProperties
+	private ImageProperties getImagePropertiesByDisplaySize() {
+//		TODO calculate the maximum area size of the puzzle image
+//		Minimum des Absolutwertes der Differenz der Quotienten der Bildauflösungsfläche (Pixel) und der Bildschirmauflösungsfläche (Pixel)
+		float min = 0;
+		ImageProperties props = null;
+		
+		for(ImageProperties properties:imageProperties){
+			if (min == 0) {
+				min = Math.abs((properties.getRatioWidth()*properties.getRatioHeight()) - (AppInjector.application().displayWidth*AppInjector.application().displayHeight));
+				props = properties;
+			}
+			else if (min > Math.abs((properties.getRatioWidth()*properties.getRatioHeight()) - (AppInjector.application().displayWidth*AppInjector.application().displayHeight))) {
+				min = Math.abs((properties.getRatioWidth()*properties.getRatioHeight()) - (AppInjector.application().displayWidth*AppInjector.application().displayHeight));
+				props = properties;
+			}
+		}
+//		TODO waehle das Objekt mit dem herausgefundenen Minimum und gebe es zurück - speichere also zwischendrin imemr das Objekt mit dem Minimum ab, das was übrig bleibt es ist
+		
+		return props;
 	}
 	
 	private void initLevelListeners() {
