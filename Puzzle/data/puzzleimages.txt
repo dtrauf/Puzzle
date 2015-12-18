@@ -1,0 +1,23 @@
+#Seitenverhältnis Breite,Seitenverhältnis Höhe,Breite,Höhe,Dateiname
+#16:10
+16,10,960,600,data/puzzleimages/manarola_cinque_terre_italy-wallpaper-960x600.jpg
+16,10,1152,720,manarola_cinque_terre_italy-wallpaper-1152x720.jpg
+16,10,1280,800,manarola_cinque_terre_italy-wallpaper-1280x800.jpg
+16,10,1440,900,manarola_cinque_terre_italy-wallpaper-1440x900.jpg
+16,10,1680,1050,manarola_cinque_terre_italy-wallpaper-1680x1050.jpg
+16,10,1920,1200,manarola_cinque_terre_italy-wallpaper-1920x1200.jpg
+16,10,2560,1600,manarola_cinque_terre_italy-wallpaper-2560x1600.jpg
+16,10,2880,1800,manarola_cinque_terre_italy-wallpaper-2880x1800.jpg
+16,10,3840,2400,manarola_cinque_terre_italy-wallpaper-3840x2400.jpg
+#4:3
+4,3,800,600,manarola_cinque_terre_italy-wallpaper-800x600.jpg
+4,3,1024,768,manarola_cinque_terre_italy-wallpaper-1024x768.jpg
+4,3,1152,864,manarola_cinque_terre_italy-wallpaper-1152x864.jpg
+4,3,1280,960,manarola_cinque_terre_italy-wallpaper-1280x960.jpg
+4,3,1400,1050,manarola_cinque_terre_italy-wallpaper-1400x1050.jpg
+4,3,1440,1080,manarola_cinque_terre_italy-wallpaper-1440x1080.jpg
+4,3,1600,1200,manarola_cinque_terre_italy-wallpaper-1600x1200.jpg
+4,3,1680,1260,manarola_cinque_terre_italy-wallpaper-1680x1260.jpg
+4,3,1920,1440,manarola_cinque_terre_italy-wallpaper-1920x1440.jpg
+4,3,2048,1536,manarola_cinque_terre_italy-wallpaper-2048x1536.jpg
+4,3,2560,1920,manarola_cinque_terre_italy-wallpaper-2560x1920.jpg
