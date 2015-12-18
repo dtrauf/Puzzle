@@ -11,6 +11,6 @@ public class Constants {
 
 	public static final String version = "1";
 	
-	public static final String RESOURCE_URI = "./resources";
+	public static final String PUZZLE_IMAGES_INFO = "data/puzzleimages.txt";
 	
 }
