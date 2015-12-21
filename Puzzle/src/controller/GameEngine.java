@@ -40,6 +40,8 @@ public class GameEngine implements ILevelListener {
 	
 	private ArrayList<ImageProperties> imageProperties;
 	
+	private ImageProperties optimalProperties;
+	
 	// Verwaltet alle aktiven Objekte des Spiels.
 	// Als aktive Objekte gelten (derzeit) das Level und alle im Level vorkommenden Objekte
 	
@@ -67,6 +69,7 @@ public class GameEngine implements ILevelListener {
 	public GameEngine() {
 		levelMap = new HashMap<Integer, Level>();
 		imageProperties = loadImageProperties();
+		optimalProperties = getImagePropertiesByDisplaySize();
 		currentLevel = 1;
 		
 		// Since we created the Level objects in the loadResources() method we can now add the Engine as a listener to each one.
@@ -140,10 +143,19 @@ public class GameEngine implements ILevelListener {
 		return imageProperties;
 	}
 	
-//	TODO method to get the "right" numbers from ImageProperties
+	/**
+	 * @return the optimalProperties
+	 */
+	public ImageProperties getOptimalProperties() {
+		return optimalProperties;
+	}
+
+	/**
+	 * Calculates the optimal area size of the puzzle image. 
+	 * 
+	 * @return ImageProperties
+	 */
 	private ImageProperties getImagePropertiesByDisplaySize() {
-//		TODO calculate the maximum area size of the puzzle image
-//		Minimum des Absolutwertes der Differenz der Quotienten der Bildauflösungsfläche (Pixel) und der Bildschirmauflösungsfläche (Pixel)
 		float min = 0;
 		ImageProperties props = null;
 		
@@ -157,8 +169,6 @@ public class GameEngine implements ILevelListener {
 				props = properties;
 			}
 		}
-//		TODO waehle das Objekt mit dem herausgefundenen Minimum und gebe es zurück - speichere also zwischendrin imemr das Objekt mit dem Minimum ab, das was übrig bleibt es ist
-		
 		return props;
 	}
 	

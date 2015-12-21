@@ -6,7 +6,11 @@
  */
 package controller;
 
+import java.awt.Color;
+
+import gui.Piece;
 import gui.PreviewImage;
+import model.PuzzleImage;
 import processing.core.PImage;
 import processing.core.PVector;
 import util.AppInjector;
@@ -69,8 +73,30 @@ public class GameController {
 	}
 	
 	public void createAllPieces() {
-		PImage puzzleImage = Utility.getImage("data/view_of_manarola_cinque_terre_italy-wallpaper-960x600.jpg");
-		
+		PuzzleImage puzzleImage = new PuzzleImage(AppInjector.engine().getOptimalProperties().getRatioWidth(), AppInjector.engine().getOptimalProperties().getRatioHeight(), AppInjector.engine().getOptimalProperties().getImagePath());
+		int pieceWidth = AppInjector.engine().getOptimalProperties().getResWidth()/24;
+		int pieceHeight = AppInjector.engine().getOptimalProperties().getResHeight()/15;
+		PImage img = new PImage(pieceWidth, pieceHeight);
+//		example for 360 pieces
+		for (int i=0; i<24; i++){
+			for (int j=0; j<15; j++){
+				for (int k=i*pieceWidth;k<i*pieceWidth+pieceWidth;k++){
+					for (int l=j*pieceHeight; l<j*pieceHeight+pieceHeight;l++){
+						
+						img.loadPixels();
+//						TODO find the right pixels in puzzleImage
+						img.pixels[k+l] = puzzleImage.getPuzzleImage().pixels[k+l];
+						img.updatePixels();
+					}
+				}
+				
+				
+				Piece piece = new Piece(i, j, pieceWidth, pieceHeight, 0, true, null);
+				piece.setImageSection(img);
+				
+				AppInjector.zoneManager().add(piece);		
+			}
+		}
 		
 		
 	}

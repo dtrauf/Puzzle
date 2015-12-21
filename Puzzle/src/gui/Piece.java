@@ -3,10 +3,10 @@
  */
 package gui;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import processing.core.PImage;
 import vialab.SMT.Zone;
 
 
@@ -27,7 +27,9 @@ public class Piece extends Zone {
 	private int y;					//row position of the piece in the matrix
 	private int xPos;
 	private int yPos;
-	private int imageSection;		//section of the image of the whole puzzle
+	private int width;
+	private int height;
+	private PImage imageSection;		//section of the image of the whole puzzle
 	private double angle;			//angle of the piece, initiate with 0
 	private double zoom;			//level of magnification
 	private int priority;			//level depends on number of comprehended pieces ... 1 for 1 piece, 2 for 2 pieces,..., 5 for 5 pieces, 6 for 6-10 pieces, 7 for 11-25 pieces, 8 for 26-100 pieces, 9 for more than 100
@@ -43,12 +45,13 @@ public class Piece extends Zone {
 	 * @param addable
 	 * @param junctures
 	 */
-	public Piece(int x, int y, int imageSection, int shape, boolean addable,
+	public Piece(int x, int y, int width, int height, int shape, boolean addable,
 			ArrayList<Vector> junctures) {
 
 		this.x = x;
 		this.y = y;
-		this.imageSection = imageSection;
+		this.width = width;
+		this.height = height;
 		this.angle = 0;
 		this.zoom = 1;
 		this.priority = 1;
@@ -56,7 +59,8 @@ public class Piece extends Zone {
 		this.addable = addable;
 		this.junctures = junctures;
 //		TODO use the AppInjector to get the size of the pieces depending on the number of pieces and calculate the measures in the Utility class
-//		setSize();
+		setSize(width, height);
+		translate(width*x, height*y);
 	}
 	
 	
@@ -129,8 +133,13 @@ public class Piece extends Zone {
 	/**
 	 * @param imageSection the imageSection to set
 	 */
-	public void setImageSection(int imageSection) {
+	public void setImageSection(PImage imageSection) {
 		this.imageSection = imageSection;
+	}
+	
+	public void draw() {
+//		rect(0, 0, width, height);
+		image(imageSection, 0, 0);
 	}
 	
 	public void touch() {
