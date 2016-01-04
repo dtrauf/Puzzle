@@ -31,25 +31,25 @@ public class PreviewImage extends Zone{
 	 */
 	public PreviewImage (){
 		
-		this.testImage = Utility.getImage("data/5520293_1600x1200.jpg");		// puzzle image
-		this.newImage = Utility.getImage("data/pixels.jpg");					// small image for image section of piece
+		this.testImage = Utility.getImage(AppInjector.engine().getOptimalProperties().getImagePath());		// puzzle image
+//		this.newImage = Utility.getImage("data/pixels.jpg");					// small image for image section of piece
 //		PImage maskImage = Utility.getImage("data/mask3.jpg");					// masking image
 		
 //		load the pixels of both images
-		testImage.loadPixels(); 
-		newImage.loadPixels();
+//		testImage.loadPixels(); 
+//		newImage.loadPixels();
 		
 //		writes pixels of puzzle image into small image pixels
-		for (int i = 0; i < 100*100; i++) {
-			newImage.pixels[i] = testImage.pixels[i+50000];
-		}
-		newImage.updatePixels();
+//		for (int i = 0; i < 100*100; i++) {
+//			newImage.pixels[i] = testImage.pixels[i+50000];
+//		}
+//		newImage.updatePixels();
 		
 //		masking the image
 //		testImage.mask(maskImage);
 		
 //		Size of zone to interact
-		setSize(1024, 768);
+		setSize(AppInjector.engine().getOptimalProperties().getResWidth(), AppInjector.engine().getOptimalProperties().getResHeight());
 	}
 	
 	public void draw() {
@@ -57,7 +57,7 @@ public class PreviewImage extends Zone{
 		strokeWeight(5);
 		stroke(255);
 		image(testImage,0,0);
-		image(newImage,1500,20);
+//		image(newImage,1500,20);
 		
 	}
 	

@@ -139,6 +139,37 @@ public class GameEngine implements ILevelListener {
 		return images;
 	}
 	
+	public int[] getNumberOfPieces(){
+		
+		Path path = Paths.get(Constants.PUZZLE_NUMBERS_INFO);
+		
+		int number[] = {24,15};
+		int count = 360; 
+		try {
+			Stream<String> lines = Files.lines(path);
+            lines.forEach(s -> {
+            	if (!s.startsWith("#")) { //ignore comment
+            		String[] parts = s.split(",");
+//            		if(parts[0] == "R16" && optimalProperties.getRatioWidth() == 16 && Integer.parseInt(parts[3]) == 360) {
+//            		TODO read number of peaces depending on chosen number of peaces
+            		if(Integer.parseInt(parts[3]) == count) {
+            			number[0] = Integer.parseInt(parts[1]);
+            			number[1] = Integer.parseInt(parts[2]);
+            		}
+//            		else if (parts[0] == "R4" && optimalProperties.getRatioWidth() == 4 && Integer.parseInt(parts[3]) == 360) {
+            		else if(Integer.parseInt(parts[3]) == count) {
+            			number[0] = Integer.parseInt(parts[1]);
+            			number[1] = Integer.parseInt(parts[2]);
+            		}
+            	}
+            });
+            lines.close();
+        } catch (IOException ex) {
+
+        }
+		return number;
+	}
+	
 	public ArrayList<ImageProperties> getImageProperties() {
 		return imageProperties;
 	}

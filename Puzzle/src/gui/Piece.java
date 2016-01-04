@@ -40,7 +40,8 @@ public class Piece extends Zone {
 	/**
 	 * @param x
 	 * @param y
-	 * @param imageSection
+	 * @param width
+	 * @param height
 	 * @param shape
 	 * @param addable
 	 * @param junctures

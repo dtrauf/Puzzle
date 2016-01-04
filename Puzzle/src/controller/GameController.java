@@ -63,30 +63,36 @@ public class GameController {
 	 */	
 	public void addPreviewImage() {
 //		TODO get size of Image from method in Utility class
-//		PreviewImage pImage = new PreviewImage();
-//
-//		pImage.translate(AppInjector.application().displayWidth-768,AppInjector.application().displayHeight/4);
-//		pImage.rotateAbout(4.7123889803847f, Zone.CENTER);
-//		
-//		AppInjector.zoneManager().add(pImage);
+		PreviewImage pImage = new PreviewImage();
+
+		pImage.translate(AppInjector.application().displayWidth-768,AppInjector.application().displayHeight/4);
+		pImage.rotateAbout(4.7123889803847f, Zone.CENTER);
+		pImage.scale(0.4f);
+		AppInjector.zoneManager().add(pImage);
 		
 	}
 	
 	public void createAllPieces() {
 		PuzzleImage puzzleImage = new PuzzleImage(AppInjector.engine().getOptimalProperties().getRatioWidth(), AppInjector.engine().getOptimalProperties().getRatioHeight(), AppInjector.engine().getOptimalProperties().getImagePath());
-		int pieceWidth = AppInjector.engine().getOptimalProperties().getResWidth()/24;
-		int pieceHeight = AppInjector.engine().getOptimalProperties().getResHeight()/15;
+
+		AppInjector.engine().getNumberOfPieces();
+//		get the number of peaces per row and column from the GameEngine - 0 for width, 1 for height
+		int pieceWidth = AppInjector.engine().getOptimalProperties().getResWidth()/AppInjector.engine().getNumberOfPieces()[0];
+		int pieceHeight = AppInjector.engine().getOptimalProperties().getResHeight()/AppInjector.engine().getNumberOfPieces()[1];
+		
+		PImage maskImg = Utility.getImage("data/puzzleteil.png");
+		maskImg.resize(pieceWidth, pieceHeight);
 		PImage img = new PImage(pieceWidth, pieceHeight);
-//		example for 360 pieces
-		for (int i=0; i<24; i++){
-			for (int j=0; j<15; j++){
+		
+		for (int i=0; i<AppInjector.engine().getNumberOfPieces()[0]; i++){
+			for (int j=0; j<AppInjector.engine().getNumberOfPieces()[1]; j++){
 				for (int k=i*pieceWidth;k<i*pieceWidth+pieceWidth;k++){
 					for (int l=j*pieceHeight; l<j*pieceHeight+pieceHeight;l++){
 						
 						img.loadPixels();
-//						TODO find the right pixels in puzzleImage
-						img.pixels[k+l] = puzzleImage.getPuzzleImage().pixels[k+l];
+						img = puzzleImage.getPuzzleImage().get(k, l, pieceWidth, pieceHeight);
 						img.updatePixels();
+						img.mask(maskImg);
 					}
 				}
 				
