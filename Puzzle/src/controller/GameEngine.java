@@ -151,7 +151,7 @@ public class GameEngine implements ILevelListener {
             	if (!s.startsWith("#")) { //ignore comment
             		String[] parts = s.split(",");
 //            		if(parts[0] == "R16" && optimalProperties.getRatioWidth() == 16 && Integer.parseInt(parts[3]) == 360) {
-//            		TODO read number of peaces depending on chosen number of peaces
+//            		TODO read number of pieces depending on chosen number of pieces
             		if(Integer.parseInt(parts[3]) == count) {
             			number[0] = Integer.parseInt(parts[1]);
             			number[1] = Integer.parseInt(parts[2]);

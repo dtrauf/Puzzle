@@ -15,6 +15,6 @@ public class Constants {
 	
 	public static final String PUZZLE_IMAGES_INFO = "data/puzzleimages.txt";
 
-	public static final String PUZZLE_NUMBERS_INFO = "data/numberofpeaces.txt";
+	public static final String PUZZLE_NUMBERS_INFO = "data/numberofpieces.txt";
 	
 }

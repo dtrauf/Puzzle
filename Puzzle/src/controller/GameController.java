@@ -76,7 +76,7 @@ public class GameController {
 		PuzzleImage puzzleImage = new PuzzleImage(AppInjector.engine().getOptimalProperties().getRatioWidth(), AppInjector.engine().getOptimalProperties().getRatioHeight(), AppInjector.engine().getOptimalProperties().getImagePath());
 
 		AppInjector.engine().getNumberOfPieces();
-//		get the number of peaces per row and column from the GameEngine - 0 for width, 1 for height
+//		get the number of pieces per row and column from the GameEngine - 0 for width, 1 for height
 		int pieceWidth = AppInjector.engine().getOptimalProperties().getResWidth()/AppInjector.engine().getNumberOfPieces()[0];
 		int pieceHeight = AppInjector.engine().getOptimalProperties().getResHeight()/AppInjector.engine().getNumberOfPieces()[1];
 		
