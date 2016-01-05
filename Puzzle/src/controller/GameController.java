@@ -14,6 +14,7 @@ import model.PuzzleImage;
 import processing.core.PImage;
 import processing.core.PVector;
 import util.AppInjector;
+import util.Constants;
 import util.io.Utility;
 import vialab.SMT.Zone;
 
@@ -81,7 +82,7 @@ public class GameController {
 		int pieceHeight = AppInjector.engine().getOptimalProperties().getResHeight()/AppInjector.engine().getNumberOfPieces()[1];
 		
 		PImage maskImg = Utility.getImage("data/puzzleteil.png");
-		maskImg.resize(pieceWidth, pieceHeight);
+		maskImg.resize(pieceWidth+pieceWidth/5, pieceHeight+pieceHeight/5);
 		PImage img = new PImage(pieceWidth, pieceHeight);
 		
 		for (int i=0; i<AppInjector.engine().getNumberOfPieces()[0]; i++){
@@ -90,8 +91,9 @@ public class GameController {
 					for (int l=j*pieceHeight; l<j*pieceHeight+pieceHeight;l++){
 						
 						img.loadPixels();
-						img = puzzleImage.getPuzzleImage().get(k, l, pieceWidth, pieceHeight);
+						img = puzzleImage.getPuzzleImage().get(k-pieceWidth, l-pieceHeight, pieceWidth, pieceHeight);
 						img.updatePixels();
+						img.resize(pieceWidth+pieceWidth/5, pieceHeight+pieceHeight/5);
 						img.mask(maskImg);
 					}
 				}
@@ -102,9 +104,7 @@ public class GameController {
 				
 				AppInjector.zoneManager().add(piece);		
 			}
-		}
-		
-		
+		}		
 	}
 	
 }

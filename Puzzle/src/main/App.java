@@ -1,9 +1,12 @@
 package main;
 
+import gui.Piece;
 import processing.core.PApplet;
 import util.AppInjector;
+import util.Constants;
 import vialab.SMT.SMT;
 import vialab.SMT.TouchSource;
+import vialab.SMT.Zone;
 
 public class App extends PApplet {
 
@@ -38,10 +41,15 @@ public class App extends PApplet {
 //		create all pieces
 		AppInjector.controller().createAllPieces();
 		
+//		show the current settings
+		String name = AppInjector.zoneManager().getZones().get(1).getName();
+		System.out.println("Display Resolution:\t" + AppInjector.application().displayWidth + " x " + AppInjector.application().displayHeight);
+		System.out.println("Image Resolution:\t" + AppInjector.engine().getOptimalProperties().getResWidth() + " x " + AppInjector.engine().getOptimalProperties().getResHeight());
+		System.out.println("Number of Pieces:\t" + AppInjector.zoneManager().getZoneCountFor(Piece.class) + " in " + AppInjector.engine().getNumberOfPieces()[0] + " columns and " + AppInjector.engine().getNumberOfPieces()[1] + " rows");
 	}
 	
 	public void draw() {
 		
-		background(30);
+		background(40);
 	}
 }
