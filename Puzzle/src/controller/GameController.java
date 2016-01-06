@@ -11,6 +11,7 @@ import java.awt.Color;
 import gui.Piece;
 import gui.PreviewImage;
 import model.PuzzleImage;
+import model.ShapeType;
 import processing.core.PImage;
 import processing.core.PVector;
 import util.AppInjector;
@@ -81,8 +82,37 @@ public class GameController {
 		int pieceWidth = AppInjector.engine().getOptimalProperties().getResWidth()/AppInjector.engine().getNumberOfPieces()[0];
 		int pieceHeight = AppInjector.engine().getOptimalProperties().getResHeight()/AppInjector.engine().getNumberOfPieces()[1];
 		
-		PImage maskImg = Utility.getImage("data/puzzleteil.png");
-		maskImg.resize(pieceWidth+pieceWidth/5, pieceHeight+pieceHeight/5);
+//		PImage maskImg = Utility.getImage("data/puzzleteil.png");
+
+//		blending of shape images for masking image
+		PImage shape1 = Utility.getImage("data/shapes/shape01.png");
+		PImage shape2 = Utility.getImage("data/shapes/shape02.png");
+		PImage shape3 = Utility.getImage("data/shapes/shape03.png");
+		PImage shape4 = Utility.getImage("data/shapes/shape04.png");
+		PImage shape5 = Utility.getImage("data/shapes/shape05.png");
+		PImage shape6 = Utility.getImage("data/shapes/shape06.png");
+		PImage shape7 = Utility.getImage("data/shapes/shape07.png");
+		PImage shape8 = Utility.getImage("data/shapes/shape08.png");
+		PImage shape9 = Utility.getImage("data/shapes/shape09.png");
+		shape1.resize(pieceWidth, pieceHeight);
+		shape2.resize(pieceWidth, pieceHeight);
+		shape3.resize(pieceWidth, pieceHeight);
+		shape4.resize(pieceWidth, pieceHeight);
+		shape5.resize(pieceWidth, pieceHeight);
+		shape6.resize(pieceWidth, pieceHeight);
+		shape7.resize(pieceWidth, pieceHeight);
+		shape8.resize(pieceWidth, pieceHeight);
+		shape9.resize(pieceWidth, pieceHeight);
+		
+		
+		shape1.blend(shape2, 0, 0, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight, shape1.BLEND);
+		shape1.blend(shape3, 0, 0, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight, shape1.BLEND);
+		shape1.blend(shape6, 0, 0, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight, shape1.BLEND);
+		shape1.blend(shape7, 0, 0, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight, shape1.BLEND);
+		
+		
+		
+		shape1.resize(pieceWidth+pieceWidth/10*3, pieceHeight+pieceHeight/10*3);
 		PImage img = new PImage(pieceWidth, pieceHeight);
 		
 		for (int i=0; i<AppInjector.engine().getNumberOfPieces()[0]; i++){
@@ -93,8 +123,8 @@ public class GameController {
 						img.loadPixels();
 						img = puzzleImage.getPuzzleImage().get(k-pieceWidth, l-pieceHeight, pieceWidth, pieceHeight);
 						img.updatePixels();
-						img.resize(pieceWidth+pieceWidth/5, pieceHeight+pieceHeight/5);
-						img.mask(maskImg);
+						img.resize(pieceWidth+pieceWidth/10*3, pieceHeight+pieceHeight/10*3);
+						img.mask(shape1);
 					}
 				}
 				
@@ -105,6 +135,27 @@ public class GameController {
 				AppInjector.zoneManager().add(piece);		
 			}
 		}		
+	}
+	
+	private PImage blendImages(ShapeType type) {
+		PImage shape1 = Utility.getImage("data/shapes/shape01.png");
+		PImage shape2 = Utility.getImage("data/shapes/shape02.png");
+		PImage shape3 = Utility.getImage("data/shapes/shape03.png");
+		PImage shape4 = Utility.getImage("data/shapes/shape04.png");
+		PImage shape5 = Utility.getImage("data/shapes/shape05.png");
+		PImage shape6 = Utility.getImage("data/shapes/shape06.png");
+		PImage shape7 = Utility.getImage("data/shapes/shape07.png");
+		PImage shape8 = Utility.getImage("data/shapes/shape08.png");
+		PImage shape9 = Utility.getImage("data/shapes/shape09.png");
+		
+		switch (type){
+		case UPPER_LEFT_CORNER: 
+//			shape1.blend(ShapePartType, sx, sy, sw, sh, dx, dy, dw, dh, mode);
+			break;
+		}
+		
+		return null;
+		
 	}
 	
 }
