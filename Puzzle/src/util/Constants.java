@@ -17,6 +17,6 @@ public class Constants {
 
 	public static final String PUZZLE_NUMBERS_INFO = "data/numberofpieces.txt";
 
-	public static final int NUMBER_OF_PIECES = 160;
+	public static final int NUMBER_OF_PIECES = 40;
 	
 }
