@@ -19,4 +19,6 @@ public class Constants {
 
 	public static final int NUMBER_OF_PIECES = 40;
 	
+	public static final float PIECE_SIZE_FACTOR = 0.6f;
+	
 }
