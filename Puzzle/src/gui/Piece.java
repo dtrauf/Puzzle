@@ -88,6 +88,12 @@ public class Piece extends Zone {
 	public int getPriority() {
 		return priority;
 	}
+	
+	public int getXY(String xy) {
+		if (xy == "x")
+			return this.x;
+		else return this.y;
+	}
 
 	/**
 	 * @param priority the priority to set
