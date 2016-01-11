@@ -59,6 +59,9 @@ public class Utility {
 		}
 	}
 	
-//	TODO method for calculating the measures of pieces
-//	TODO method for to get the size of an image
+	public static void removeImage(PImage image) {
+		if (imageMap.get(image) != null) {
+			AppInjector.application().removeCache(imageMap.get(image));
+		}
+	}
 }
