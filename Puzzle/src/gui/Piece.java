@@ -31,7 +31,6 @@ public class Piece extends Zone {
 	private int width;
 	private int height;
 	private PImage imageSection;		//section of the image of the whole puzzle
-	private double angle;			//angle of the piece, initiate with 0
 	private double zoom;			//level of magnification
 	private int priority;			//level depends on number of comprehended pieces ... 1 for 1 piece, 2 for 2 pieces,..., 5 for 5 pieces, 6 for 6-10 pieces, 7 for 11-25 pieces, 8 for 26-100 pieces, 9 for more than 100
 	private int shape;				//type of shape
@@ -55,7 +54,6 @@ public class Piece extends Zone {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.angle = 0;
 		this.zoom = 1;
 		this.priority = 1;
 		this.shape = shape;
@@ -119,13 +117,6 @@ public class Piece extends Zone {
 	 */
 	public void setShape(int shape) {
 		this.shape = shape;
-	}
-
-	/**
-	 * @param angle the angle to set
-	 */
-	public void setAngle(int angle) {
-		this.angle = angle;
 	}
 	
 	/**

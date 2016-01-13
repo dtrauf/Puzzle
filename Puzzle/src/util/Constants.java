@@ -17,7 +17,7 @@ public class Constants {
 
 	public static final String PUZZLE_NUMBERS_INFO = "data/numberofpieces.txt";
 
-	public static final int NUMBER_OF_PIECES = 40;
+	public static final int NUMBER_OF_PIECES = 160;
 	
 	public static final float PIECE_SIZE_FACTOR = 0.6f;
 	
