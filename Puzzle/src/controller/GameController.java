@@ -6,7 +6,7 @@
  */
 package controller;
 
-import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
 
 import gui.Piece;
@@ -33,6 +33,8 @@ import vialab.SMT.Zone;
  *          <LI>[storz][31.08.2015] Created</LI>
  */
 public class GameController {
+	
+	private ArrayList<Piece> pieces = new ArrayList<Piece>();
 	
 	/**
 	 * Add a new card at the specified center position with specified rotation angle.
@@ -83,10 +85,6 @@ public class GameController {
 //		get the number of pieces per row and column from the GameEngine - 0 for width, 1 for height
 		int pieceWidth = AppInjector.engine().getOptimalProperties().getResWidth()/AppInjector.engine().getNumberOfPieces()[0];
 		int pieceHeight = AppInjector.engine().getOptimalProperties().getResHeight()/AppInjector.engine().getNumberOfPieces()[1];
-		int widthResized = pieceWidth+pieceWidth/10*3;
-		int heightResized = pieceHeight+pieceHeight/10*3;
-		
-//		PImage img = new PImage(pieceWidth, pieceHeight);
 		
 //		blending of shape images for masking image
 		PImage shape1 = Utility.getImage("data/shapes/shape01.png");
@@ -106,29 +104,12 @@ public class GameController {
 		shape6.resize(pieceWidth, pieceHeight);
 		shape7.resize(pieceWidth, pieceHeight);
 		shape8.resize(pieceWidth, pieceHeight);
-		shape9.resize(pieceWidth, pieceHeight);
-		
-		PImage tempShape = shape1;
-/**		TODO groeßere Teile hinzufuegen, die die Ausbuchtungen zur verfügung stellen
- * 		> also immer wenn es mindestens eine Ausbuchtung gibt, handelt es sich um ein größeres Teil
-*/		
+		shape9.resize(pieceWidth, pieceHeight);		
 		
 		for (int i=0; i<AppInjector.engine().getNumberOfPieces()[0]; i++){
 			for (int j=0; j<AppInjector.engine().getNumberOfPieces()[1]; j++){
-				PImage img = new PImage(pieceWidth, pieceHeight);
-				PImage tempImg = new PImage(pieceWidth, pieceHeight);
-//				TODO Maske über andere Methode erzeugen und hier einfuegen
-				
-//				if(j == 0 && i == 0){
-//					shape1.blend(shape6, 0, 0, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight, shape1.BLEND);
-//				}
-//				if(i == 0)
-//					shape1.blend(shape9, 0, 0, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight, shape1.BLEND);
-//				if(i == AppInjector.engine().getNumberOfPieces()[0]-1)
-//					shape1.blend(shape7, 0, 0, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight, shape1.BLEND);
-//				if((j+1)%AppInjector.engine().getNumberOfPieces()[1] == 0)
-//					shape1.blend(shape8, 0, 0, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight, shape1.BLEND);
-						
+				PImage img = new PImage((int)(pieceWidth+pieceWidth*Constants.PIECE_SIZE_FACTOR), (int)(pieceHeight+pieceHeight*Constants.PIECE_SIZE_FACTOR));
+								
 				img.loadPixels();
 /*				loads the pixels of the puzzle image into piece image with: get(x, y, w, h)
  * 				x - upper left x coordinate of source image
@@ -136,44 +117,44 @@ public class GameController {
  * 				w - width of expected section from source image
  * 				h - height of expected section from source image										
  */
-				img = puzzleImage.getPuzzleImage().get(i*pieceWidth, j*pieceHeight, pieceWidth, pieceHeight);
+				img = puzzleImage.getPuzzleImage().get((int)(i*pieceWidth-pieceWidth*Constants.PIECE_SIZE_FACTOR/2), (int)(j*pieceHeight-pieceHeight*Constants.PIECE_SIZE_FACTOR/2), (int)(pieceWidth+pieceWidth*Constants.PIECE_SIZE_FACTOR), (int)(pieceHeight+pieceHeight*Constants.PIECE_SIZE_FACTOR));
 				img.updatePixels();
-//				img.resize(pieceWidth+pieceWidth/10*3, pieceHeight+pieceHeight/10*3);
-//				if ((i ==0 && j==0) || i==3 || i == 5 || j == 2)	
-//					img.mask(shape1);
-//				img.mask(blendImages(ShapeType.LOWER_LEFT_CORNER, pieceWidth, pieceHeight, 0));
 				
+//				creates one new piece
 				Piece piece = new Piece(i, j, pieceWidth, pieceHeight, 0, true, null);
+				pieces.add(piece);
 				
 //				conditions for corners
 				if(piece.getXY("x") == 0 && piece.getXY("y") == 0){
-					img.mask(blendImages(ShapeType.UPPER_LEFT_CORNER, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.UPPER_LEFT_CORNER, i, j, pieceWidth, pieceHeight, 0));
 				}
 				else if(piece.getXY("x") == AppInjector.engine().getNumberOfPieces()[0]-1 && piece.getXY("y") == 0) {
-					img.mask(blendImages(ShapeType.UPPER_RIGHT_CORNER, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.UPPER_RIGHT_CORNER, i, j, pieceWidth, pieceHeight, 0));
 				}
 				else if(piece.getXY("x") == AppInjector.engine().getNumberOfPieces()[0]-1 && piece.getXY("y") == AppInjector.engine().getNumberOfPieces()[1]-1) {
-					img.mask(blendImages(ShapeType.LOWER_RIGHT_CORNER, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.LOWER_RIGHT_CORNER, i, j, pieceWidth, pieceHeight, 0));
 				}
 				else if(piece.getXY("x") == 0 && piece.getXY("y") == AppInjector.engine().getNumberOfPieces()[1]-1) {
-					img.mask(blendImages(ShapeType.LOWER_LEFT_CORNER, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.LOWER_LEFT_CORNER, i, j, pieceWidth, pieceHeight, 0));
 				}
 				
 //				conditions for edges
 				else if(piece.getXY("y") == 0){
-					img.mask(blendImages(ShapeType.UPPER_EDGE, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.UPPER_EDGE, i, j, pieceWidth, pieceHeight, 0));
 				}
 				else if(piece.getXY("x") == AppInjector.engine().getNumberOfPieces()[0]-1){
-					img.mask(blendImages(ShapeType.RIGHT_EDGE, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.RIGHT_EDGE, i, j, pieceWidth, pieceHeight, 0));
 				}
 				else if(piece.getXY("y") == AppInjector.engine().getNumberOfPieces()[1]-1){
-					img.mask(blendImages(ShapeType.LOWER_EDGE, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.LOWER_EDGE, i, j, pieceWidth, pieceHeight, 0));
 				}
 				else if(piece.getXY("x") == 0){
-					img.mask(blendImages(ShapeType.LEFT_EDGE, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.LEFT_EDGE,  i, j, pieceWidth, pieceHeight, 0));
 				}
+				
+//				inner pieces
 				else {
-					img.mask(blendImages(ShapeType.INNER_PIECE, pieceWidth, pieceHeight, 0));
+					img.mask(blendImages(ShapeType.INNER_PIECE, i, j, pieceWidth, pieceHeight, 0));
 				}
 				
 				piece.setImageSection(img);
@@ -183,7 +164,7 @@ public class GameController {
 		}		
 	}
 	
-	private PImage blendImages(ShapeType type, int width, int height, float offset) {
+	private PImage blendImages(ShapeType type, int x, int y, int width, int height, float offset) {
 		PImage blendImage = new PImage(width, height);
 		PImage clearImage = new PImage(width, height);
 		offset = Constants.PIECE_SIZE_FACTOR;
@@ -201,109 +182,152 @@ public class GameController {
 		Random r2 = new Random();
 		blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 		
-//		if (r1.nextInt(2) == 1)
-//			blendImage.resize((int)(width+width*offset/2), 0);
-//		else if (r2.nextInt(2) == 1)
-//			blendImage.resize(0, (int)(height+height*offset/2));
-
-		
-		// mark "complete" show completion for cases with completed inherent blending -> decisions on neighbors AND resizing of images are lacking yet
-//		TODO wenn r1 oder r2 == 1, dann sollte das Bild erst erweitert werden bzw. das Kleinere in das Größere (mit Rand) geblendet und dann die 
-//		Gesamtgröße wieder verkleinert werden (wo kommt die größere Größe her?)
-		
 		switch (type){
-		case UPPER_LEFT_CORNER: 	/* complete */
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+		case UPPER_LEFT_CORNER: 	
+			blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 //			fill gaps and add convexity if random number says so
 			if (r1.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
 			}
 			if (r2.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
 			}
 			break;
-		case UPPER_RIGHT_CORNER: 	/* complete */
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+		case UPPER_RIGHT_CORNER: 	
+			blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			if (r1.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+			}
+//			set left convexity if there is a gap on the right side of the left neighbor
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
 			break;
-		case LOWER_RIGHT_CORNER: 	/* complete */
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			break;
-		case LOWER_LEFT_CORNER: 	/* complete */
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			if (r1.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+		case LOWER_RIGHT_CORNER: 	
+			blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			}
+//			set upper convexity if there is a gap on the lower side of the upper neighbor
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
 			break;
-		case UPPER_EDGE:			/* complete */
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+		case LOWER_LEFT_CORNER: 	
+			blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			if (r1.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
+			}
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			}
+			break;
+		case UPPER_EDGE:			
+//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			if (r1.nextInt(2) == 1){
+				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
 			}
 			if (r2.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+			}
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
 			break;
-		case RIGHT_EDGE:			/* complete */
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+		case RIGHT_EDGE:			
+			blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			if (r1.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+			}
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			}
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
 			break;
-		case LEFT_EDGE:			/* complete */
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+		case LEFT_EDGE:			
+			blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			if (r1.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
 			}
 			if (r2.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+			}
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
 			break;
-		case LOWER_EDGE:			/* complete */
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+		case LOWER_EDGE:			
+			blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			if (r1.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
+			}
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			}
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
 			break;
 		default:
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			if (r1.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
 			}
 			if (r2.nextInt(2) == 1){
-				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
 			}
-//			TODO fuege Bildteile abhängig von Nachbarteilen (oben und links) ein
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			}
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
+			}
 			break;
 		}
 
-		blendImage.resize(width, height);
+		blendImage.resize((int)(width+width*Constants.PIECE_SIZE_FACTOR), (int)(height+height*Constants.PIECE_SIZE_FACTOR));
 		return blendImage;
 		
 	}
@@ -327,17 +351,17 @@ public class GameController {
 		case LEFT_CONVEXITY:
 			shape = Utility.getImage(ShapePartType.LEFT_CONVEXITY.getTypeImagePath());
 			break;
-		case UPPER_GAP_FILLLED:
-			shape = Utility.getImage(ShapePartType.UPPER_GAP_FILLLED.getTypeImagePath());
+		case UPPER_GAP_FILLED:
+			shape = Utility.getImage(ShapePartType.UPPER_GAP_FILLED.getTypeImagePath());
 			break;
-		case RIGHT_GAP_FILLLED:
-			shape = Utility.getImage(ShapePartType.RIGHT_GAP_FILLLED.getTypeImagePath());
+		case RIGHT_GAP_FILLED:
+			shape = Utility.getImage(ShapePartType.RIGHT_GAP_FILLED.getTypeImagePath());
 			break;
-		case LOWER_GAP_FILLLED:
-			shape = Utility.getImage(ShapePartType.LOWER_GAP_FILLLED.getTypeImagePath());
+		case LOWER_GAP_FILLED:
+			shape = Utility.getImage(ShapePartType.LOWER_GAP_FILLED.getTypeImagePath());
 			break;
-		case LEFT_GAP_FILLLED:
-			shape = Utility.getImage(ShapePartType.LEFT_GAP_FILLLED.getTypeImagePath());
+		case LEFT_GAP_FILLED:
+			shape = Utility.getImage(ShapePartType.LEFT_GAP_FILLED.getTypeImagePath());
 			break;
 		default: 
 			shape = Utility.getImage(ShapePartType.FOUR_GAPS.getTypeImagePath());

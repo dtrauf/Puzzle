@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import processing.core.PImage;
+import util.Constants;
 import vialab.SMT.Zone;
 
 
@@ -33,8 +34,9 @@ public class Piece extends Zone {
 	private double angle;			//angle of the piece, initiate with 0
 	private double zoom;			//level of magnification
 	private int priority;			//level depends on number of comprehended pieces ... 1 for 1 piece, 2 for 2 pieces,..., 5 for 5 pieces, 6 for 6-10 pieces, 7 for 11-25 pieces, 8 for 26-100 pieces, 9 for more than 100
-	private int shape;				//type of shape, one of 7 or one of 13
+	private int shape;				//type of shape
 	private boolean addable;		//can be added to a container
+	private int[] convexities;		//which convexities are set - 0 for upper, 1 for right, 2 for lower, 3 for left
 	
 	
 	/**
@@ -59,8 +61,11 @@ public class Piece extends Zone {
 		this.shape = shape;
 		this.addable = addable;
 		this.junctures = junctures;
-//		TODO use the AppInjector to get the size of the pieces depending on the number of pieces and calculate the measures in the Utility class
-		setSize(width, height);
+		this.convexities = new int[4];
+		for (int i=0; i<4; i++)
+			this.convexities[i] = 0;
+		setSize((int)(width+width*Constants.PIECE_SIZE_FACTOR), (int)(height+height*Constants.PIECE_SIZE_FACTOR));
+//		TODO delete next line and offer random placement elsewhere
 		translate(width*x, height*y);
 	}
 	
@@ -178,6 +183,24 @@ public class Piece extends Zone {
 		this.imageSection = imageSection;
 	}
 	
+	/**
+	 * @return the convexity
+	 */
+	public boolean isConvexitySet(int i) {
+		if (convexities[i] == 1)
+			return true;
+		else return false;
+	}
+
+
+	/**
+	 * @param convexity the convexity to set
+	 */
+	public void setConvexity(int i) {
+		this.convexities[i] = 1;
+	}
+
+
 	public void draw() {
 //		rect(0, 0, width, height);
 		image(imageSection, 0, 0);
