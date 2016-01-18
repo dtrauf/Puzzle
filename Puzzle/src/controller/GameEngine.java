@@ -13,13 +13,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Stream;
 
 import controller.listener.ILevelListener;
+import gui.Piece;
 import model.ImageProperties;
 import model.Level;
 import util.AppInjector;
 import util.Constants;
+import vialab.SMT.Zone;
 
 /**
  * This is the GameEngine. The GameEngine is responsible for the "flow" of a game. It manages
@@ -201,6 +204,17 @@ public class GameEngine implements ILevelListener {
 			}
 		}
 		return props;
+	}
+	
+	public void randomizePlacement() {
+		ArrayList<Zone> pieces = new ArrayList<Zone>();
+		pieces = AppInjector.zoneManager().getZonesByClass(Piece.class);
+
+		for (Zone piece : pieces) {
+			Random x = new Random();
+			Random y = new Random();
+			piece.setLocation((int)x.nextInt()*y.nextInt(), (int)y.nextInt()*x.nextInt());
+		}
 	}
 	
 	private void initLevelListeners() {

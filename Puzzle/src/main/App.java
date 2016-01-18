@@ -40,6 +40,7 @@ public class App extends PApplet {
 		
 //		create all pieces
 		AppInjector.controller().createAllPieces();
+//		AppInjector.engine().randomizePlacement();
 		
 //		show the current settings
 		String name = AppInjector.zoneManager().getZones().get(1).getName();
