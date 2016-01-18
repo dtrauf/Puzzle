@@ -21,4 +21,10 @@ public class Constants {
 	
 	public static final float PIECE_SIZE_FACTOR = 0.6f;
 	
+	public static final int UPPER = 0;
+	public static final int RIGHT = 1;
+	public static final int LOWER = 2;
+	public static final int LEFT = 3;
+	
+	
 }

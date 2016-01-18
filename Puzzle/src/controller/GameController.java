@@ -120,7 +120,7 @@ public class GameController {
 				img = puzzleImage.getPuzzleImage().get((int)(i*pieceWidth-pieceWidth*Constants.PIECE_SIZE_FACTOR/2), (int)(j*pieceHeight-pieceHeight*Constants.PIECE_SIZE_FACTOR/2), (int)(pieceWidth+pieceWidth*Constants.PIECE_SIZE_FACTOR), (int)(pieceHeight+pieceHeight*Constants.PIECE_SIZE_FACTOR));
 				img.updatePixels();
 				
-//				creates one new piece
+//				creates a new piece
 				Piece piece = new Piece(i, j, pieceWidth, pieceHeight, 0, true, null);
 				pieces.add(piece);
 				
@@ -190,12 +190,12 @@ public class GameController {
 			if (r1.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.RIGHT);
 			}
 			if (r2.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.LOWER);
 			}
 			break;
 		case UPPER_RIGHT_CORNER: 	
@@ -204,10 +204,10 @@ public class GameController {
 			if (r1.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.LOWER);
 			}
 //			set left convexity if there is a gap on the right side of the left neighbor
-			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(Constants.RIGHT)){
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
@@ -215,12 +215,12 @@ public class GameController {
 		case LOWER_RIGHT_CORNER: 	
 			blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(Constants.RIGHT)){
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
 //			set upper convexity if there is a gap on the lower side of the upper neighbor
-			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(Constants.LOWER)){
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
@@ -231,27 +231,26 @@ public class GameController {
 			if (r1.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.RIGHT);
 			}
-			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(Constants.LOWER)){
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
 			break;
 		case UPPER_EDGE:			
-//			blendImage.blend(this.getShapeImage(ShapePartType.FOUR_GAPS), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			if (r1.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.RIGHT);
 			}
 			if (r2.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.LOWER);
 			}
-			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(Constants.RIGHT)){
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
@@ -261,13 +260,13 @@ public class GameController {
 			if (r1.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.LOWER);
 			}
-			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(Constants.RIGHT)){
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
-			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(Constants.LOWER)){
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
@@ -277,14 +276,14 @@ public class GameController {
 			if (r1.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.RIGHT);
 			}
 			if (r2.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.LOWER);
 			}
-			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(Constants.LOWER)){
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
@@ -294,13 +293,13 @@ public class GameController {
 			if (r1.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.RIGHT);
 			}
-			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(Constants.RIGHT)){
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
-			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(Constants.LOWER)){
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
@@ -309,18 +308,18 @@ public class GameController {
 			if (r1.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.RIGHT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(1);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.RIGHT);
 			}
 			if (r2.nextInt(2) == 1){
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LOWER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
-				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(2);
+				pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).setConvexity(Constants.LOWER);
 			}
-			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(1)){
+			if(!pieces.get(y+(AppInjector.engine().getNumberOfPieces()[1]-1)*(x-1)+(x-1)).isConvexitySet(Constants.RIGHT)){
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.LEFT_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
-			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(2)){
+			if(!pieces.get((y-1)+(AppInjector.engine().getNumberOfPieces()[1]-1)*x+x).isConvexitySet(Constants.LOWER)){
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_GAP_FILLED), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 				blendImage.blend(this.getShapeImage(ShapePartType.UPPER_CONVEXITY), 0, 0, width, height, 0, 0, width, height, blendImage.BLEND);
 			}
@@ -332,6 +331,13 @@ public class GameController {
 		
 	}
 	
+	/**
+	 * @return the pieces
+	 */
+	public ArrayList<Piece> getPieces() {
+		return pieces;
+	}
+
 	public PImage getShapeImage(ShapePartType type) {
 		PImage shape = null;
 		

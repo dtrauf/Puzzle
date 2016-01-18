@@ -38,6 +38,14 @@ public class Cluster extends Zone {
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
+
+	public boolean addPiece(Piece piece) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+	
 	
 	
 	
