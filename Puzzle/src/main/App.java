@@ -1,5 +1,6 @@
 package main;
 
+import gui.PersonalTerritory;
 import gui.Piece;
 import processing.core.PApplet;
 import util.AppInjector;
@@ -47,6 +48,7 @@ public class App extends PApplet {
 		System.out.println("Display Resolution:\t" + AppInjector.application().displayWidth + " x " + AppInjector.application().displayHeight);
 		System.out.println("Image Resolution:\t" + AppInjector.engine().getOptimalProperties().getResWidth() + " x " + AppInjector.engine().getOptimalProperties().getResHeight());
 		System.out.println("Number of Pieces:\t" + AppInjector.zoneManager().getZoneCountFor(Piece.class) + " in " + AppInjector.engine().getNumberOfPieces()[0] + " columns and " + AppInjector.engine().getNumberOfPieces()[1] + " rows");
+		
 	}
 	
 	public void draw() {
