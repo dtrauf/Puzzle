@@ -426,6 +426,8 @@ public boolean detectCollision(Zone collidingZone) {
 			else if(this.getXY("x") == piece.getXY("x") && (this.getXY("y")+1 == piece.getXY("y"))) {		//lower
 				piece.setLocation(this.getX(), this.getY()+pieceHeight);
 			}
+			
+//			piece.rotateAbout(this.getRotationAngle(), CENTER);
 		}
 		else return false;
 		
