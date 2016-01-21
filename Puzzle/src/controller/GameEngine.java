@@ -209,11 +209,15 @@ public class GameEngine implements ILevelListener {
 	public void randomizePlacement() {
 		ArrayList<Zone> pieces = new ArrayList<Zone>();
 		pieces = AppInjector.zoneManager().getZonesByClass(Piece.class);
+		
+		int max_rnd_x = AppInjector.options().getDisplayWidth() / 2;
+		int max_rnd_y = AppInjector.options().getDisplayHeight() / 2;
 
 		for (Zone piece : pieces) {
-			Random x = new Random();
-			Random y = new Random();
-			piece.setLocation((int)x.nextInt()*y.nextInt(), (int)y.nextInt()*x.nextInt());
+			int x = new Random().nextInt(max_rnd_x) % max_rnd_x + 100;
+			int y = new Random().nextInt(max_rnd_y) % max_rnd_y + 100;
+			
+			piece.setLocation(x,y);
 		}
 	}
 	
